@@ -12,11 +12,11 @@ module purge; pwd; hostname; date
 echo
 
 echo "Activate Conda environment"
-source apps/miniconda/etc/profile.d/conda.sh
+source ~/apps/miniconda/etc/profile.d/conda.sh
 conda activate cellmodeller
 
 echo "Running CellModeller on a single CPU core"
-python3 github/CellModeller/Scripts/batch.py src/cellmodeller/simpleGrowth2D_microchannel.py 0 0
+python3 ~/apps/cellmodeller/Scripts/batch.py src/simpleGrowth2D_microchannel.py 0 0
 
 echo "Job finished at"
 date
