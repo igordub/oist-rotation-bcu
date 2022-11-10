@@ -4,11 +4,15 @@
 # New subdirectory in scratch/ is created to store
 # the generated files
 # 
-# As an argument, a subdirectory path form data/
-# must be passed to the script
-
+# As an argument, data/ subdirectory path, width and height of simulation page size
+# centered areound (0,0) must be passed to the script
+# $ bash src/create_visuals.sh <pickel-dir-path> <page-width> <page-heigth>
+# Example: $ bash src/create_visuals.sh data/simpleGrowth2D 30 3
 
 DATA_DIR=$1
+PAGE_WIDTH=$2
+PAGE_HEIGHT=$3
+
 OUT_DIR=scratch/$(basename ${DATA_DIR})
 # Create directory to store resutls
 mkdir -p ${OUT_DIR}
@@ -16,8 +20,26 @@ mkdir -p ${OUT_DIR}
 # Moving to data directory
 pushd ${DATA_DIR}
 
-# Run modified CellModeller script
-bash ${HOME}/apps/cellmodeller/Scripts/video.sh video.mp4 > /dev/null
+# Run Draw2DPDF to generate pdf files
+for FILE in $( ls *.pickle ); do
+    echo Processing: $FILE
+    python3 $HOME/apps/cellmodeller/Scripts/Draw2DPDF.py ${PAGE_WIDTH} ${PAGE_HEIGHT} ${FILE}> /dev/null
+done
+
+# Convert and resize etc. pdf files into png
+for FILE in $( ls *.pdf ); do
+    NAME=`basename $FILE .pdf`
+    convert \
+        -colorspace RGB \
+        -verbose        \
+        -density 150    \
+        $NAME.pdf       \
+        $NAME.png
+done
+
+# Run ffmpeg to generate video file
+echo "Compiling video:"
+ffmpeg -framerate 7 -i %*.png -vf scale=1920:1080 -r 24 video.mp4
 
 # Move back to root
 popd
