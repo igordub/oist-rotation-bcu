@@ -5,7 +5,7 @@
 #SBATCH --mail-user=igors.dubanevics@oist.jp    # Where to send mail	
 #SBATCH --ntasks=1                              # Run on a single CPU
 #SBATCH --cpus-per-task=1                       # CPUs per tasks
-#SBATCH --mem=1gb                               # Job memory request
+#SBATCH --mem=5gb                              # Job memory request
 #SBATCH --time=00:15:00                         # Time limit hrs:min:sec
 #SBATCH --output=logs/cellmod_microch_%j.log    # Standard output and error log
 module purge; pwd; hostname; date
@@ -16,7 +16,7 @@ source ~/apps/miniconda/etc/profile.d/conda.sh
 conda activate cellmodeller
 
 echo "Running CellModeller on a single CPU core"
-python3 ~/apps/cellmodeller/Scripts/batch.py src/simpleGrowth2D_microchannel.py 0 0
+python3 ~/apps/cellmodeller/Scripts/batch.py src/simpleGrowth2D_microchannel.py 0 0 10000
 
 echo "Job finished at"
 date

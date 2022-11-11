@@ -1,6 +1,11 @@
-data
-*.pyc
-!.gitkeep
-*.mod
 tmp
 scratch
+logs
+data
+
+# Pyhton
+*.pyc
+*.mod
+
+# Preserve directories
+!.gitkeep

@@ -23,9 +23,9 @@ def setup(sim):
         max_planes=2)
 
     # add the planes to set physical boundaries of cell growth
-    # 3 micrometer width
-    biophys.addPlane((0,1.5,0), (0,-1,0), 1.0)
-    biophys.addPlane((0,-1.5,0), (0,1,0), 1.0)
+    # 4 micrometer width
+    biophys.addPlane((0,2,0), (0,-1,0), 1.0)
+    biophys.addPlane((0,-2,0), (0,1,0), 1.0)
 
     regul = ModuleRegulator(sim, sim.moduleName)
 
