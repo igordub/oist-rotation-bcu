@@ -14,8 +14,11 @@ PAGE_WIDTH=$2
 PAGE_HEIGHT=$3
 
 OUT_DIR=scratch/$(basename ${DATA_DIR})
-# Create directory to store resutls
+FRAME_DIR=scratch/frames/$(basename ${DATA_DIR})
+
+# Create directories to store resutls
 mkdir -p ${OUT_DIR}
+mkdir -p ${FRAME_DIR}
 
 # Moving to data directory
 pushd ${DATA_DIR}
@@ -45,4 +48,6 @@ ffmpeg -framerate 7 -i %*.png -vf scale=1920:1080 -r 24 video.mp4
 popd
 
 # Move images adn video to the results directory
-mv ${DATA_DIR}/{*.pdf,*.png,*.mp4} ${OUT_DIR}
+mv ${DATA_DIR}/{*.mp4} ${OUT_DIR}
+mv ${DATA_DIR}/{*.pdf,*.png} ${FRAME_DIR}
+
