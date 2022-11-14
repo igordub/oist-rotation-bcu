@@ -1,0 +1,37 @@
+# Python packges for CellModeller module
+#
+# To install the enviroment to Conda type:
+# conda env install -f conda_env.yml
+
+name: cellmodeller
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - python
+  # Plotting
+  - matplotlib
+  - plotly
+  # Data manipulation
+  - numpy
+  - scipy
+  # Simulation drivers
+  - pyopengl
+  - pyopencl
+  - mako
+  # GUI
+  - pyqt5 
+  # Reder figures and compile videos
+  - reportlab
+  - imagemagick
+  - ffmpeg
+  - ghostscript
+  # Misc
+  - pep8
+  - autopep8
+  - pip
+  - pyyaml
+  - yaml
+  - python-dotenv
