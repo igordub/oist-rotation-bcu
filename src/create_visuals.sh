@@ -6,8 +6,17 @@
 # 
 # As an argument, data/ subdirectory path, width and height of simulation page size
 # centered areound (0,0) must be passed to the script
-# $ bash src/create_visuals.sh <pickel-dir-path> <page-width> <page-heigth>
+# $ bash src/create_visuals.sh <pickle-dir-path> <page-width> <page-heigth>
 # Example: $ bash src/create_visuals.sh data/simpleGrowth2D 30 3
+
+if [ "$#" != 3 ]; then
+        echo "Check passed argumets"
+        echo "Usage:"
+        echo "$ bash src/create_visuals.sh <pickle-dir-path> <page-width> <page-heigth>"
+        echo "Example:"
+        echo "$ bash src/create_visuals.sh data/simpleGrowth2D 35 6"
+        exit 0
+fi
 
 DATA_DIR=$1
 PAGE_WIDTH=$2
