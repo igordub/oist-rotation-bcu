@@ -1,4 +1,4 @@
-# Project Title
+# Bacteria in Microchannels
 
 __One Paragraph+__ describing the project goes here. For example: This is a README template you would use to describe a scientific or data analysis project. Provide an overview of the goals of the project, how data was obtained, and other important details others or you in 6 months should be aware of.
 
