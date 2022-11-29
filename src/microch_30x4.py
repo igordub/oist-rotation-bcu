@@ -1,4 +1,4 @@
-# CellModeller script for two bacterail collonies dividing in a channel
+# CellModeller script for two bacterial colonies dividing in a channel
 import random
 from CellModeller.Regulation.ModuleRegulator import ModuleRegulator
 from CellModeller.Biophysics.BacterialModels.CLBacterium import CLBacterium
@@ -7,9 +7,9 @@ import math
 
 max_cells = 10**3
 
-cell_cols = {0:[0,1.0,0], 1:[1.0,0,0]} #RGB cell colours
-cell_lens = {0:2.5, 1:2.5} #target cell lengths
-cell_growr = {0:1.0, 1:1.0} #growth rates
+cell_cols = {0:[0,1.0,0], 1:[1.0,0,0]} # RGB cell colours ... green and red
+cell_lens = {0:2.0, 1:2.0} # target cell lengths ... 2 um
+cell_growr = {0:0.035, 1:0.035} # growth rates - equivalent to divinding time of 20 mins
 
 def get_x_coord(cell):
     # Finds x-coordinate of a cell
@@ -18,7 +18,7 @@ def get_x_coord(cell):
 def setup(sim):
     # Set biophysics and regulation models
     biophys = CLBacterium(sim,
-        gamma=100, 
+        gamma=10, 
         jitter_z=False, 
         max_planes=2)
 
@@ -32,23 +32,19 @@ def setup(sim):
     # Only biophys and regulation
     sim.init(biophys, regul, None, None)
 
-    # Specify the initial cell and its location in the simulation
+    # Specify the initial cells and their location in the simulation
     sim.addCell(cellType=0, pos=(1,0,0), dir=(1,0,0)) 
     sim.addCell(cellType=1, pos=(-1,0,0), dir=(1,0,0))
 
-    if sim.is_gui:
-        # Add some objects to draw the models
-        from CellModeller.GUI import Renderers
-        therenderer = Renderers.GLBacteriumRenderer(sim)
-        sim.addRenderer(therenderer)
-
-    sim.pickleSteps = 10
+    # Simulation timestep is dt == 0.005 min == 0.3 s 
+    sim.pickleSteps = 100 # Save every 3 minutes in real time. Same as in the experiment
 
 def init(cell):
     # Specify mean and distribution of initial cell size
-    cell.targetVol = cell_lens[cell.cellType] + random.uniform(0.0,0.5)
+    cell.targetVol = cell_lens[cell.cellType]
     # Specify growth rate of cells
-    cell.growthRate = cell_growr[cell.cellType]
+    cell.growthRate = random.uniform(0.5 * cell_growr[cell.cellType], 
+        1.5 * cell_growr[cell.cellType])
     # Specify colour of cells
     cell.color = cell_cols[cell.cellType]
 
@@ -66,6 +62,12 @@ def update(cells):
 
 def divide(parent, d1, d2):
     # Specify target cell size that triggers cell division
-    d1.targetVol = 2.5 + random.uniform(0.0,0.5)
-    d2.targetVol = 2.5 + random.uniform(0.0,0.5)
+    d1.targetVol = cell_lens[parent.cellType] 
+    d2.targetVol = cell_lens[parent.cellType]
+
+    # Specify daugther growth rate
+    d1.growthRate = random.uniform(0.5 * 0.035, 
+        1.5 * 0.035)
+    d2.growthRate = random.uniform(0.5 * 0.035, 
+        1.5 * 0.035)
 
