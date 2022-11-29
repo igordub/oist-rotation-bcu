@@ -59,4 +59,3 @@ popd
 # Move images adn video to the results directory
 mv ${DATA_DIR}/{*.mp4} ${OUT_DIR}
 mv ${DATA_DIR}/{*.pdf,*.png} ${FRAME_DIR}
-

@@ -9,7 +9,7 @@ max_cells = 10**3
 
 cell_cols = {0:[0,1.0,0], 1:[1.0,0,0]} # RGB cell colours ... green and red
 cell_lens = {0:2.0, 1:2.0} # target cell lengths ... 2 um
-cell_growr = {0:0.035, 1:0.035} # growth rates - equivalent to divinding time of 20 mins
+cell_growr = {0:1.0, 1:1.0} # growth rates - equivalent to divinding time of 20 mins
 
 def get_x_coord(cell):
     # Finds x-coordinate of a cell
@@ -37,7 +37,7 @@ def setup(sim):
     sim.addCell(cellType=1, pos=(-1,0,0), dir=(1,0,0))
 
     # Simulation timestep is dt == 0.005 min == 0.3 s 
-    sim.pickleSteps = 100 # Save every 3 minutes in real time. Same as in the experiment
+    sim.pickleSteps = 5 # Save every 0.5 minutes in real time
 
 def init(cell):
     # Specify mean and distribution of initial cell size
