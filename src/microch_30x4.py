@@ -33,18 +33,20 @@ def setup(sim):
     sim.init(biophys, regul, None, None)
 
     # Specify the initial cells and their location in the simulation
-    sim.addCell(cellType=0, pos=(1,0,0), dir=(1,0,0)) 
-    sim.addCell(cellType=1, pos=(-1,0,0), dir=(1,0,0))
+    sim.addCell(cellType=0, pos=(1,0,0), dir=(1,0,0), len = cell_lens[0]) 
+    sim.addCell(cellType=1, pos=(-1,0,0), dir=(1,0,0), len = cell_lens[1])
 
     # Simulation timestep is dt == 0.005 min == 0.3 s 
     sim.pickleSteps = 10 
 
 def init(cell):
     # Specify mean and distribution of initial cell size
-    cell.targetVol = cell_lens[cell.cellType]
+    cell.targetLen = 2 * random.uniform(0.9 * cell_lens[cell.cellType], 1.1 * cell_lens[cell.cellType])
+
     # Specify growth rate of cells
-    cell.growthRate = random.uniform(0.5 * cell_growr[cell.cellType], 
-        1.5 * cell_growr[cell.cellType])
+    cell.growthRate = random.uniform(0.9 * cell_growr[cell.cellType], 
+        1.1 * cell_growr[cell.cellType])
+
     # Specify colour of cells
     cell.color = cell_cols[cell.cellType]
 
@@ -55,16 +57,16 @@ def update(cells):
     # Iterate through each cell and flag cells that reach target size for division
     # or remove cells from the simualtion that are out of the channel
     for (id, cell) in cells.items():
-        if cell.volume > cell.targetVol:
+        if cell.length > cell.targetLen:
             cell.divideFlag = True
         elif abs(get_x_coord(cell)) > 15: # Microchannel length: 30 microns
             cell.killFlag = True
 
 def divide(parent, d1, d2):
     # Specify target cell size that triggers cell division
-    d1.targetVol = random.uniform(0.9 * cell_lens[parent.cellType] , 
+    d1.targetLen = 2 * random.uniform(0.9 * cell_lens[parent.cellType] , 
         1.1 * cell_lens[parent.cellType]) 
-    d2.targetVol = random.uniform(0.9 * cell_lens[parent.cellType] , 
+    d2.targetLen = 2 * random.uniform(0.9 * cell_lens[parent.cellType] , 
         1.1 * cell_lens[parent.cellType]) 
 
     # Specify daugther growth rate
