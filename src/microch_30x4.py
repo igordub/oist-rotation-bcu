@@ -37,7 +37,7 @@ def setup(sim):
     sim.addCell(cellType=1, pos=(-1,0,0), dir=(1,0,0))
 
     # Simulation timestep is dt == 0.005 min == 0.3 s 
-    sim.pickleSteps = 5 # Save every 0.5 minutes in real time
+    sim.pickleSteps = 10 
 
 def init(cell):
     # Specify mean and distribution of initial cell size
@@ -62,12 +62,14 @@ def update(cells):
 
 def divide(parent, d1, d2):
     # Specify target cell size that triggers cell division
-    d1.targetVol = cell_lens[parent.cellType] 
-    d2.targetVol = cell_lens[parent.cellType]
+    d1.targetVol = random.uniform(0.9 * cell_lens[parent.cellType] , 
+        1.1 * cell_lens[parent.cellType]) 
+    d2.targetVol = random.uniform(0.9 * cell_lens[parent.cellType] , 
+        1.1 * cell_lens[parent.cellType]) 
 
     # Specify daugther growth rate
-    d1.growthRate = random.uniform(0.5 * 0.035, 
-        1.5 * 0.035)
-    d2.growthRate = random.uniform(0.5 * 0.035, 
-        1.5 * 0.035)
+    d1.growthRate = random.uniform(0.9 * cell_growr[parent.cellType], 
+        1.1 * cell_growr[parent.cellType])
+    d2.growthRate = random.uniform(0.9 * cell_growr[parent.cellType], 
+        1.1 * cell_growr[parent.cellType])
 
