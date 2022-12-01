@@ -56,6 +56,12 @@ ffmpeg -framerate 7 -i %*.png -vf scale=1920:1080 -r 24 video.mp4
 # Move back to root
 popd
 
-# Move images adn video to the results directory
-mv ${DATA_DIR}/{*.mp4} ${OUT_DIR}
+# Move images and video to the results directory
+mv ${DATA_DIR}/video.mp4 ${OUT_DIR}
 mv ${DATA_DIR}/{*.pdf,*.png} ${FRAME_DIR}
+
+if command -v code &> /dev/null
+then
+    echo "Play video in VS Code:"
+    code ${OUT_DIR}/video.mp4
+fi
