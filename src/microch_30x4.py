@@ -33,8 +33,8 @@ def setup(sim):
     sim.init(biophys, regul, None, None)
 
     # Specify the initial cells and their location in the simulation
-    sim.addCell(cellType=0, pos=(1,0,0), dir=(1,0,0), len = cell_lens[0]) 
-    sim.addCell(cellType=1, pos=(-1,0,0), dir=(1,0,0), len = cell_lens[1])
+    sim.addCell(cellType=0, pos=(2,0,0), dir=(1,1,0), len = cell_lens[0]) 
+    sim.addCell(cellType=1, pos=(-2,0,0), dir=(1,-1,0), len = cell_lens[1])
 
     # Simulation timestep is dt == 0.005 min == 0.3 s 
     sim.pickleSteps = 10 
@@ -42,6 +42,7 @@ def setup(sim):
 def init(cell):
     # Specify mean and distribution of initial cell size
     cell.targetLen = 2 * random.uniform(0.9 * cell_lens[cell.cellType], 1.1 * cell_lens[cell.cellType])
+    cell.length = random.uniform(0.9 * cell_lens[cell.cellType], 1.1 * cell_lens[cell.cellType])
 
     # Specify growth rate of cells
     cell.growthRate = random.uniform(0.9 * cell_growr[cell.cellType], 
