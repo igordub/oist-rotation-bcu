@@ -1,4 +1,7 @@
-# CellModeller script for two bacterial colonies dividing in a channel
+# CellModeller script for two bacterial colonies dividing in a microchannel
+# To achieve 1200 min of real time, 240,000 simulation steps must be made
+# with 0.005 min timestep
+
 import random
 from CellModeller.Regulation.ModuleRegulator import ModuleRegulator
 from CellModeller.Biophysics.BacterialModels.CLBacterium import CLBacterium
@@ -6,17 +9,20 @@ import numpy
 import math
 
 max_cells = 10**3
+
 # Cell parameters
 # With a fixed simualtion time step dt = 0.005 min,
 # real growth rate corresponds to 0.035 um/min
-# which correponds to doubling time of 20 min
-base_growthRate = 0.035
+# which corresponds to a doubling time of 20 min
+dt = 0.005 # [min]
+base_growthRate = 0.035 # [um/min^{-1}]
 growthRate_scale = 20
 
+# Imaging frequency in real time
 imaging_freq = 3 # [min]
-pickle_freq = round(growthRate_scale * imaging_freq)
+pickle_freq = math.floor((imaging_freq/dt)/growthRate_scale)
 
-# Microchannel dimesions
+# Microchannel dimensions
 chan_wid = 1.0 # [um]
 chan_len = 30.0 # [um]
 
@@ -26,7 +32,8 @@ length_var = 0.1
 
 cell_cols = {0:[0,1.0,0], 1:[1.0,0,0]} # RGB cell colours ... green and red
 cell_lens = {0:2.0, 1:2.0} # target cell lengths ... 2 um
-cell_growr = {0:0.7, 1:0.7}
+cell_growr = {0:growthRate_scale * base_growthRate, 
+    1:growthRate_scale * base_growthRate}
 
 def get_x_coord(cell):
     # Finds x-coordinate of a cell
@@ -57,11 +64,11 @@ def setup(sim):
 
     # Specify the initial cells and their location in the simulation
     # For each simulation put inital cells in the same position
+    # 5 um away from the center of the channel
     sim.addCell(cellType=0, pos=(5,0,0), dir=(-1,0,0), len = cell_lens[0]) 
     sim.addCell(cellType=1, pos=(-5,0,0), dir=(1,0,0), len = cell_lens[1])
 
-    # Simulation timestep: dt = 0.005 min = 0.3 s 
-    sim.pickleSteps = 10 
+    sim.pickleSteps = pickle_freq
 
 def init(cell):
     # Specify mean and distribution of initial cell size
