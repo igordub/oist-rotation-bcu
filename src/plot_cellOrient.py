@@ -64,7 +64,12 @@ os.getcwd()
 # %%
 data_dir_path = sys.argv[1]
 
+# Remove trailing backslah for get_basename f'n
+if data_dir_path[-1] == "/":
+    data_dir_path = data_dir_path[:-1]
+
 out_dir_path = join_paths("scratch", get_basename(data_dir_path))
+
 
 # Time-step
 dt = 0.005  # [min]

@@ -23,7 +23,7 @@ imaging_freq = 3 # [min]
 pickle_freq = math.floor((imaging_freq/dt)/growthRate_scale)
 
 # Microchannel dimensions
-chan_wid = 4.0 # [um]
+chan_wid = 1.5 # [um]
 chan_len = 30.0 # [um]
 
 # Uniform variation of cell parameters during division

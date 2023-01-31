@@ -33,7 +33,7 @@ length_var = 0.1
 cell_cols = {0:[0,1.0,0], 1:[1.0,0,0]} # RGB cell colours ... green and red
 cell_lens = {0:2.0, 1:2.0} # target cell lengths ... 2 um
 cell_growr = {0:growthRate_scale * base_growthRate, 
-    1:growthRate_scale * base_growthRate}
+    1:growthRate_scale * base_growthRate * 0.5}
 
 def get_x_coord(cell):
     # Finds x-coordinate of a cell

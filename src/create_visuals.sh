@@ -51,7 +51,7 @@ done
 
 # Run ffmpeg to generate video file
 echo "Compiling video:"
-ffmpeg -framerate 7 -i %*.png -vf scale=1920:1080 -r 24 video.mp4
+ffmpeg -framerate 7 -i %*.png -vf scale=1920:1080 -r 24 -vcodec libx264 -acodec aac video.mp4
 
 # Move back to root
 popd

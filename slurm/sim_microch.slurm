@@ -20,6 +20,7 @@ NUM_OF_STEPS=$2
 module purge; pwd; hostname; date
 echo
 
+echo "Running script: ${SCRIPT_PATH}"
 echo "Activate Conda environment"
 source ~/apps/miniconda/etc/profile.d/conda.sh
 conda activate cellmodeller

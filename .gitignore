@@ -1,9 +1,10 @@
+# Dirs
 tmp
 scratch
 logs
 data
 
-# Pyhton
+# Python
 *.pyc
 *.mod
 
